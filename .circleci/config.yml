@@ -9,7 +9,7 @@ orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/heroku
   # NOTE: Environment variables containing the necessary secrets can be setup in the CircleCI UI
   # See here https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project
-  # heroku: circleci/heroku@1.2
+  heroku: circleci/heroku@1.2
 # jobs:
 #   build:
 #     executor:
@@ -22,9 +22,18 @@ orbs:
 #             - run: npm install
 #       - run: npm run test
 workflows:
-  app-tests:
+  app-tests-and-deply:
     jobs:
       - node/test
+      - heroku/deploy-via-git:
+          force: true # this parameter instructs the push to use a force flag when pushing to the heroku remote, see:
+          requires:
+            - node/test # only run deploy-via-git job if the build job has completed
+          filters:
+            branches:
+              only: master # Delete this line
+
+
   # Below is the definition of your workflow.
   # Inside the workflow, you provide the jobs you want to run,
   # e.g this workflow runs the build-and-test job above.
@@ -37,7 +46,8 @@ workflows:
   #     - node/test:
   #       version: 14.15.4
   #     - heroku/deploy-via-git:
-  #         force: true # this parameter instructs the push to use a force flag when pushing to the heroku remote, see: https://devcenter.heroku.com/articles/git
+  #         force: true # this parameter instructs the push to use a force flag when pushing to the heroku remote, see:
+  #         #  https://devcenter.heroku.com/articles/git
   #         requires:
   #           - node/test # only run deploy-via-git job if the build job has completed
   #         filters:
