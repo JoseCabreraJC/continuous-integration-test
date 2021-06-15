@@ -1,0 +1,23 @@
+{
+  "name": "continuous-integration-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha index.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseCabreraJC/continuous-integration-test.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoseCabreraJC/continuous-integration-test/issues"
+  },
+  "homepage": "https://github.com/JoseCabreraJC/continuous-integration-test#readme",
+  "devDependencies": {
+    "mocha": "^9.0.0"
+  }
+}
