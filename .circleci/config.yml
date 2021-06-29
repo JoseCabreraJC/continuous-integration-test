@@ -24,6 +24,19 @@ orbs:
 #             - run: npm install
 #       - run: npm run test
 jobs:
+  test:
+    executor: node/default
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+      - slack/notify:
+          event: fail
+          mentions: "@Jose Jose"
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
   sonar-scan:
     docker:
       - image: "cimg/node:14.16.1"
@@ -42,7 +55,9 @@ jobs:
 workflows:
   app-tests-and-deply:
     jobs:
-      - node/test
+      - test:
+          context:
+            - SlackNotifs
       - sonar-scan:
           context:
             - SonarCloud
