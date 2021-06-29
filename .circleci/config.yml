@@ -4,6 +4,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.1
+  slack: circleci/slack@4.4.2
   # The heroku orb contains a set of prepackaged CircleCI configuration you can utilize to deploy applications to heroku
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/heroku
@@ -25,11 +26,18 @@ orbs:
 jobs:
   sonar-scan:
     docker:
-      - image: 'cimg/node:14.16.1'
+      - image: "cimg/node:14.16.1"
     steps:
       - checkout
       - run: npm install
       - sonarcloud/scan
+      - slack/notify:
+          event: fail
+          mentions: "@Jose Jose"
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
 
 workflows:
   app-tests-and-deply:
@@ -42,7 +50,7 @@ workflows:
           requires:
             - node/test # only run deploy-via-git job if the build job has completed
             - sonar-scan
-            filters:
+          filters:
             branches:
               only: master # Delete this line
 
