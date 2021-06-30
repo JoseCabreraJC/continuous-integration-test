@@ -1,5 +1,6 @@
+var i;
 function suma(a, b) {
-  var i = 1;
+  i = 1;
   return a + b;
 }
 
