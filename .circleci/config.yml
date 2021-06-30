@@ -65,7 +65,7 @@ workflows:
       - heroku/deploy-via-git:
           force: true # this parameter instructs the push to use a force flag when pushing to the heroku remote, see:
           requires:
-            - node/test # only run deploy-via-git job if the build job has completed
+            - test # only run deploy-via-git job if the build job has completed
             - sonar-scan
           filters:
             branches:
